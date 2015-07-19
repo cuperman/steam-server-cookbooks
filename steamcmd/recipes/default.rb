@@ -37,11 +37,11 @@ unless ::File.exists? "#{node[:steamcmd][:steamcmd_dir]}/steamcmd_linux.tar.gz"
 end
   
 unless ::File.exists? "#{node[:steamcmd][:steamcmd_dir]}/steamcmd.sh"
-  execute 'tar zxvf steamcmd_linux.tag.gz' do
+  execute 'tar zxvf steamcmd_linux.tar.gz' do
     user node[:steamcmd][:user]
     group node[:steamcmd][:group]
     cwd node[:steamcmd][:steamcmd_dir]
-    command 'tar zxvf steamcmd_linux.tag.gz'
+    command 'tar zxvf steamcmd_linux.tar.gz'
     timeout 1800
   end
 end
