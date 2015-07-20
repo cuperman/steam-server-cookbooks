@@ -4,12 +4,13 @@
 
 Go to your [EC2 dashboard](https://us-west-1.console.aws.amazon.com/ec2/v2/home?region=us-west-1#KeyPairs:sort=keyName), and create a key pair for a particular region (US West, for example)
 
-You will be prompted to download the .pem file. After downloading the file to your local machine, put it in your ~/.ssh directory, and create a public key using the `ssh-keygen -y` command.
+You will be prompted to download the .pem file. After downloading the file to your local machine, put it in your ~/.ssh directory, make sure it's only accessible by you, and create a public key using the `ssh-keygen -y` command.
 
 Example:
 
 ```bash
 $ mv ~/Desktop/jeff-aws.pem ~/.ssh
+$ chmod 600 ~/.ssh/jeff-aws.pem
 $ ssh-keygen -y > ~/.ssh/jeff-aws.pub
 Enter file in which the key is (/Users/jeff/.ssh/id_rsa): /Users/jeff/.ssh/jeff-aws.pem
 ```
