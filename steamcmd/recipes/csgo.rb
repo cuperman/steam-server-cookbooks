@@ -18,3 +18,9 @@ execute "#{node[:steamcmd][:root_dir]}/steamcmd.sh +runscript #{node[:steamcmd][
   retries 3
   retry_delay 5
 end
+
+template "/etc/init.d/csgo" do
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
