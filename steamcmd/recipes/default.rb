@@ -1,5 +1,10 @@
-package 'glibc'
-package 'libstdc++'
+yum_package 'glibc' do
+  arch 'i686'
+end
+
+yum_package 'libstdc++' do
+  arch 'i686'
+end
 
 group node[:steamcmd][:group] do
   action :create
@@ -12,7 +17,21 @@ user node[:steamcmd][:user] do
   home node[:steamcmd][:home]
 end
 
-directory node[:steamcmd][:steamcmd_dir] do
+directory node[:steamcmd][:root_dir] do
+  action :create
+  owner node[:steamcmd][:user]
+  group node[:steamcmd][:group]
+  mode '0755'
+end
+
+directory node[:steamcmd][:downloads_dir] do
+  action :create
+  owner node[:steamcmd][:user]
+  group node[:steamcmd][:group]
+  mode '0755'
+end
+
+directory node[:steamcmd][:scripts_dir] do
   action :create
   owner node[:steamcmd][:user]
   group node[:steamcmd][:group]
@@ -26,8 +45,8 @@ directory node[:steamcmd][:apps_dir] do
   mode '0755'
 end
 
-unless ::File.exists? "#{node[:steamcmd][:steamcmd_dir]}/steamcmd_linux.tar.gz"
-  remote_file "#{node[:steamcmd][:steamcmd_dir]}/steamcmd_linux.tar.gz" do
+unless ::File.exists? "#{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz"
+  remote_file "#{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz" do
     action :create
     source 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz'
     owner node[:steamcmd][:user]
@@ -36,12 +55,12 @@ unless ::File.exists? "#{node[:steamcmd][:steamcmd_dir]}/steamcmd_linux.tar.gz"
   end
 end
   
-unless ::File.exists? "#{node[:steamcmd][:steamcmd_dir]}/steamcmd.sh"
-  execute 'tar zxvf steamcmd_linux.tar.gz' do
+unless ::File.exists? "#{node[:steamcmd][:root_dir]}/steamcmd.sh"
+  execute "tar zxvf #{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz" do
     user node[:steamcmd][:user]
     group node[:steamcmd][:group]
-    cwd node[:steamcmd][:steamcmd_dir]
-    command 'tar zxvf steamcmd_linux.tar.gz'
+    cwd node[:steamcmd][:root_dir]
+    command "tar zxvf #{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz"
     timeout 1800
   end
 end
