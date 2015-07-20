@@ -56,7 +56,7 @@ In the side-panel menu of your newly created stack, click on Layers and create a
 **Name:** Steam dedicated server
 **Short name:** steam_server
 
-Now, under Steam dedicated server, click the Recipes tab, and add "steamcmd::default" to the setup section of the Custom Chef Recipes.
+Now, under Steam dedicated server, click the Recipes tab, and add a recipe to the setup section of the Custom Chef Recipes. For example, to install Counter-Strike: GO, enter "steamcmd::csgo".
 
 Under the EBS Volumes tab, mount a 30GB volume to /opt/steamcmd
 
