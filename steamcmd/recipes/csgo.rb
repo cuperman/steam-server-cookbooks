@@ -1,7 +1,6 @@
 include_recipe 'steamcmd::default'
 
 template "#{node[:steamcmd][:scripts_dir]}/csgo.txt" do
-  source 'csgo.txt'
   owner node[:steamcmd][:user]
   group node[:steamcmd][:group]
   mode '0644'
