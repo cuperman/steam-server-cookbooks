@@ -61,6 +61,9 @@ Now, under Steam dedicated server, click the Recipes tab, and add a recipe to th
 
 Under the EBS Volumes tab, mount a 30GB volume to /opt/steamcmd
 
+*TODO*
+Under the Security tab, figure out how to use either security groups or ec2 instance profiles to open necessary ports for source server.
+
 ## Start Instance
 
 In the instances menu of your stack, you can create new instances. Once started, they will automatically install and start the Steam dedicated server. If it fails, you will be shown a failure log. You can ssh into the VM to debug by using your key pair:
