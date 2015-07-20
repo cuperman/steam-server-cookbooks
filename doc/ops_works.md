@@ -58,6 +58,8 @@ In the side-panel menu of your newly created stack, click on Layers and create a
 
 Now, under Steam dedicated server, click the Recipes tab, and add "steamcmd::default" to the setup section of the Custom Chef Recipes.
 
+Under the EBS Volumes tab, mount a 30GB volume to /opt/steamcmd
+
 ## Start Instance
 
 In the instances menu of your stack, you can create new instances. Once started, they will automatically install and start the Steam dedicated server. If it fails, you will be shown a failure log. You can ssh into the VM to debug by using your key pair:
