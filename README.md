@@ -15,3 +15,9 @@ Use Amazon AWS OpsWorks to provision servers. See [doc/ops_works.md](./doc/ops_w
 - RedHat Init Script Docs: https://fedoraproject.org/wiki/Packaging:SysVInitScript
 - Best Practices for Linux Services: http://stackoverflow.com/questions/394984/best-practice-to-run-linux-service-as-a-different-user
 - IPTables Rules: http://ksloan.net/how-to-set-up-your-own-csgo-dedicated-server-in-less-than-5-minutes-linux/
+
+## systemd
+
+- https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Basic_System_Configuration.html
+- https://wiki.archlinux.org/index.php/Systemd/User
+- http://forums.srcds.com/viewtopic/22385
