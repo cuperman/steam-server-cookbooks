@@ -25,6 +25,7 @@ template "/etc/init.d/csgo" do
   mode '0755'
 end
 
-# chkconfig --add csgo
-
-# service csgo start
+service "csgo" do
+  supports status: true, restart: true, reload: false
+  action [ :enable, :start ]
+end
