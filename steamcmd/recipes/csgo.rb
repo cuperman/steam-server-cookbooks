@@ -22,5 +22,9 @@ end
 template "/etc/init.d/csgo" do
   owner 'root'
   group 'root'
-  mode '0644'
+  mode '0755'
 end
+
+# chkconfig --add csgo
+
+# service csgo start

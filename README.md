@@ -21,3 +21,7 @@ Use Amazon AWS OpsWorks to provision servers. See [doc/ops_works.md](./doc/ops_w
 - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Basic_System_Configuration.html
 - https://wiki.archlinux.org/index.php/Systemd/User
 - http://forums.srcds.com/viewtopic/22385
+
+## Sysvinit
+
+- http://forums.srcds.com/viewtopic/5835
