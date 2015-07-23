@@ -3,5 +3,5 @@
 @sSteamCmdForcePlatformType linux
 login anonymous
 force_install_dir <%= "#{node[:steamcmd][:apps_dir]}/csgo" %>
-app_update 740 validate
+app_update <%= node[:steamcmd][:csgo][:id] %> validate
 quit
