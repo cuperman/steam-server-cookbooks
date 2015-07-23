@@ -1,0 +1,7 @@
+@ShutdownOnFailedCommand 1
+@NoPromptForPassword 1
+@sSteamCmdForcePlatformType linux
+login anonymous
+force_install_dir <%= "#{node[:steamcmd][:apps_dir]}/#{@name}" %>
+app_update <%= node[:steamcmd][@name.to_sym][:id] %> validate
+quit

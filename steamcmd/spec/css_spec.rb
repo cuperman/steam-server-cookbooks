@@ -1,12 +1,12 @@
 require 'chefspec'
 require 'shared'
 
-describe 'steamcmd::csgo' do
+describe 'steamcmd::css' do
   let(:chef_run) { ChefSpec::SoloRunner.converge(described_recipe) }
   
   it_behaves_like 'a game recipe' do
-    let(:title) { 'Counter-Strike: Global Offensive' }
-    let(:name) { 'csgo' }
-    let(:id) { 740 }
+    let(:title) { 'Counter-Strike: Source' }  
+    let(:name) { 'css' }
+    let(:id) { 232330 }
   end
 end

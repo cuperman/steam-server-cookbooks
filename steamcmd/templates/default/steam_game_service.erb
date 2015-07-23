@@ -7,18 +7,18 @@
 #
 
 # Server options
-TITLE='Source Dedicated Server'   # Script initialization title
-LONGNAME='Counter-Strike: GO'     # Full title of game type
-NAME='csgo'                       # Server handle for the screen session
-DAEMON='srcds_run'                # The server daemon
-STEAM='/opt/steamcmd/apps/csgo'   # STEAM to Steam installation
-USER='steam'
+TITLE='<%= node[:steamcmd][@name.to_sym][:title] %>'    # Script initialization title
+NAME='<%= @name %>'                                     # Server handle for the screen session
+DAEMON='srcds_run'                                      # The server daemon
+STEAM='<%= "#{node[:steamcmd][:apps_dir]}/#{@name}" %>' # STEAM to Steam installation
+USER='<%= node[:steamcmd][:user] %>'
 
+# TODO Game options should be generic
 # Game options
 IP='0.0.0.0'                      # IP of the server
 PORT='27015'                      # Port number to
 MAP='de_dust2'                    # Initial map to start
-GAME='csgo'                       # Game type (tf|cstrike|valve|hl2mp|csgo)
+GAME='<%= @name %>'               # Game type (tf|cstrike|valve|hl2mp|csgo)
 SIZE='24'                         # Maximum number of players
 
 # Server options string
@@ -32,7 +32,7 @@ service_start() {
     # Check if the pid files currently exist
     if [ ! -f $STEAM/$GAME/$NAME-screen.pid ]; then
         if [ -x $STEAM/$DAEMON ]; then
-            echo "Starting $TITLE - $LONGNAME"
+            echo "Starting $TITLE"
             echo "Server IP: $IP"
             echo "Server port: $PORT"
             echo "Server size: $SIZE players"
@@ -54,7 +54,7 @@ service_start() {
 
 service_stop() {
     if [ -f $STEAM/$GAME/$NAME-screen.pid ]; then
-        echo "Stopping $TITLE - $LONGNAME."
+        echo "Stopping $TITLE."
         # Get the process ID from the pid file we created earlier
         for id in `cat $STEAM/$GAME/$NAME-screen.pid`
             do kill -9 $id
