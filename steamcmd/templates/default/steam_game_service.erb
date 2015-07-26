@@ -6,77 +6,57 @@
 # description: some startup script
 #
 
-# Server options
-TITLE='<%= node[:steamcmd][@name.to_sym][:title] %>'    # Script initialization title
-NAME='<%= @name %>'                                     # Server handle for the screen session
-DAEMON='srcds_run'                                      # The server daemon
-STEAM='<%= "#{node[:steamcmd][:apps_dir]}/#{@name}" %>' # STEAM to Steam installation
-USER='<%= node[:steamcmd][:user] %>'
-
-# TODO Game options should be generic
-# Game options
-IP='0.0.0.0'                      # IP of the server
-PORT='27015'                      # Port number to
-MAP='de_dust2'                    # Initial map to start
-GAME='<%= @name %>'               # Game type (tf|cstrike|valve|hl2mp|csgo)
-SIZE='24'                         # Maximum number of players
-
 # Server options string
-OPTS="-game $GAME +hostname \"$CLIENT\" +map $MAP +ip $IP -port $PORT \
-    -autoupdate +maxplayers $SIZE -pidfile $STEAM/$GAME/$NAME.pid"
+OPTS="-game <%= @game %> +map <%= @map %> +ip <%= @ip %> -port <%= @port %> +maxplayers <%= @maxplayers %> -pidfile <%= @pidfile %>"
 
 # Screen command
-INTERFACE="/usr/bin/screen -A -m -d -S $NAME"
+INTERFACE="/usr/bin/screen -A -m -d -S <%= @name %>"
 
 service_start() {
     # Check if the pid files currently exist
-    if [ ! -f $STEAM/$GAME/$NAME-screen.pid ]; then
-        if [ -x $STEAM/$DAEMON ]; then
-            echo "Starting $TITLE"
-            echo "Server IP: $IP"
-            echo "Server port: $PORT"
-            echo "Server size: $SIZE players"
-            cd $STEAM
-            $INTERFACE $STEAM/$DAEMON $OPTS
+    if [ ! -f <%= @screenpidfile %> ]; then
+        if [ -x <%= @daemon %> ]; then
+            echo "Starting <%= @title %>"
+            cd <%= @root_dir %>
+            $INTERFACE <%= @daemon %> $OPTS
             # Prevent race condition on SMP kernels
             sleep 1
             # Find and write current process id of the screen process
-            ps -ef | grep SCREEN | grep "$NAME" | grep -v grep | awk '{ print $2 }' > $STEAM/$GAME/$NAME-screen.pid
-            echo "$TITLE screen process ID written to $STEAM/$GAME/$NAME-screen.pid"
-            echo "$TITLE server process ID written to $STEAM/$GAME/$NAME.pid"
-
-            echo "$TITLE started."
+            ps -ef | grep SCREEN | grep "<%= @name %>" | grep -v grep | awk '{ print $2 }' > <%= @screenpidfile %>
+            echo "<%= @title %> screen process ID written to <%= @screenpidfile %>"
+            echo "<%= @title %> server process ID written to <%= @pidfile %>"
+            echo "<%= @title %> started."
         fi
     else
-        echo -e "Cannot start $TITLE.  Server is already running."
+        echo -e "Cannot start <%= @title %>. Server is already running."
     fi
 }
 
 service_stop() {
-    if [ -f $STEAM/$GAME/$NAME-screen.pid ]; then
-        echo "Stopping $TITLE."
+    if [ -f <%= @screenpidfile %> ]; then
+        echo "Stopping <%= @title %>."
         # Get the process ID from the pid file we created earlier
-        for id in `cat $STEAM/$GAME/$NAME-screen.pid`
+        for id in `cat <%= @screenpidfile %>`
             do kill -9 $id
             echo "Killing process ID $id"
-            echo "Removing $TITLE screen pid file"
-            rm -rf $STEAM/$GAME/$NAME-screen.pid
+            echo "Removing <%= @title %> screen pid file"
+            rm -rf <%= @screenpidfile %>
             break
         done
         # Remove server pid file
-        echo "Removing $TITLE pid file"
-        rm -rf $STEAM/$GAME/$NAME.pid
+        echo "Removing <%= @title %> pid file"
+        rm -rf <%= @pidfile %>
         # Wipe all old screen sessions
         screen -wipe 1> /dev/null 2> /dev/null
-        echo "$TITLE stopped."
+        echo "<%= @title %> stopped."
     else
-        echo -e "Cannot stop $TITLE.  Server is not running."
+        echo -e "Cannot stop <%= @title %>. Server is not running."
     fi
 }
 
 service_status() {
-    if [ -f $STEAM/$GAME/$NAME-screen.pid ]; then
-        if ps -ef | grep SCREEN | grep "$NAME" | grep -v grep; then
+    if [ -f <%= @screenpidfile %> ]; then
+        if ps -ef | grep SCREEN | grep "<%= @name %>" | grep -v grep; then
             echo "Server is running"
             exit 0
         else
