@@ -41,3 +41,4 @@ default[:steamcmd][:l4d2][:maxplayers] = 8
 ## TODO
 
 - Auto update
+- More configuration options
