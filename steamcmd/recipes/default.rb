@@ -45,6 +45,14 @@ directory node[:steamcmd][:apps_dir] do
   mode '0755'
 end
 
+directory node[:steamcmd][:tmp_dir] do
+  action :create
+  owner node[:steamcmd][:user]
+  group node[:steamcmd][:group]
+  mode '0755'
+end
+
+
 unless ::File.exists? "#{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz"
   remote_file "#{node[:steamcmd][:downloads_dir]}/steamcmd_linux.tar.gz" do
     action :create

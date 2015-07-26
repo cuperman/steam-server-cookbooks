@@ -11,6 +11,7 @@ describe 'steamcmd::default' do
   it { expect(chef_run).to create_directory('/opt/steamcmd/downloads').with(mode: '0755') }
   it { expect(chef_run).to create_directory('/opt/steamcmd/scripts').with(mode: '0755') }
   it { expect(chef_run).to create_directory('/opt/steamcmd/apps').with(mode: '0755') }
+  it { expect(chef_run).to create_directory('/opt/steamcmd/tmp').with(mode: '0755') }
   it { expect(chef_run).to create_remote_file('/opt/steamcmd/downloads/steamcmd_linux.tar.gz').with(mode: '0644') }
   it { expect(chef_run).to run_execute('tar zxvf /opt/steamcmd/downloads/steamcmd_linux.tar.gz') }
 end
