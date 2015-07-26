@@ -6,19 +6,18 @@
 # description: some startup script
 #
 
-# Server options string
-OPTS="-game <%= @game %> +map <%= @map %> +ip <%= @ip %> -port <%= @port %> +maxplayers <%= @maxplayers %> -pidfile <%= @pidfile %>"
-
 # Screen command
 INTERFACE="/usr/bin/screen -A -m -d -S <%= @name %>"
+
+# Server options string
+OPTS="-game <%= @game %> +map <%= @map %> +ip <%= @ip %> -port <%= @port %> +maxplayers <%= @maxplayers %> -pidfile <%= @pidfile %>"
 
 service_start() {
     # Check if the pid files currently exist
     if [ ! -f <%= @screenpidfile %> ]; then
         if [ -x <%= @daemon %> ]; then
             echo "Starting <%= @title %>"
-            cd <%= @root_dir %>
-            $INTERFACE <%= @daemon %> $OPTS
+            sudo su - u <%= @user %> -c "$INTERFACE <%= @daemon %> $OPTS"
             # Prevent race condition on SMP kernels
             sleep 1
             # Find and write current process id of the screen process

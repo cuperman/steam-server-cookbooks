@@ -33,6 +33,7 @@ define :steam_game do
       screenpidfile: "#{node[:steamcmd][:tmp_dir]}/#{params[:name]}-screen.pid",
       root_dir:      app_path,
       daemon:        "#{app_path}/srcds_run",
+      user:          node[:steamcmd][:user],
       title:         node[:steamcmd][params[:name].to_sym][:title],
       id:            node[:steamcmd][params[:name].to_sym][:id],
       game:          node[:steamcmd][params[:name].to_sym][:game],
