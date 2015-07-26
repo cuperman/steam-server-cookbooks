@@ -17,11 +17,11 @@ service_start() {
     if [ ! -f <%= @screenpidfile %> ]; then
         if [ -x <%= @daemon %> ]; then
             echo "Starting <%= @title %>"
-            sudo -u <%= @user %> -c "$INTERFACE <%= @daemon %> $OPTS"
+            su - <%= @user %> -c "cd <%= @root_dir %> && $INTERFACE <%= @daemon %> $OPTS"
             # Prevent race condition on SMP kernels
             sleep 1
             # Find and write current process id of the screen process
-            sudo -u <%= @user %> -c "ps -ef | grep SCREEN | grep "<%= @name %>" | grep -v grep | awk '{ print $2 }' > <%= @screenpidfile %>"
+            su - <%= @user %> -c "ps -ef | grep SCREEN | grep <%= @name %> | grep -v grep | awk '{ print $2 }' > <%= @screenpidfile %>"
             echo "<%= @title %> screen process ID written to <%= @screenpidfile %>"
             echo "<%= @title %> server process ID written to <%= @pidfile %>"
             echo "<%= @title %> started."
